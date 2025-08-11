@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Form</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Form</h1>
+    <form action="/getAdmin" method="GET" class="form">
+      <label for="adminID">Admin ID</label>
+      <input type="text" id="adminID" name="adminID" required />
+
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" required />
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" required />
+
+      <label for="department">Department</label>
+      <input type="text" id="department" name="department" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
