@@ -21,7 +21,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// 👇 use .single since you're only uploading one file
 const upload = multer({ storage }).single('file');
 
 // Serve static files
@@ -37,7 +36,7 @@ app.get('/uploadForm', (req, res) => {
   res.sendFile(path.join(__dirname, 'uploads', 'uploadForm.html'));
 });
 
-// File upload handler (uploadForm → /upload)
+// File upload handler
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
     if (err) return res.end('Error uploading file');
@@ -69,7 +68,6 @@ app.get('/getStudent', (req, res) => {
   }
 });
 
-// 👇 now this will work because req.file will exist
 app.post('/postAdmin', upload, (req, res) => {
   const { adminID, firstName, lastName, department, username } = req.body;
 
