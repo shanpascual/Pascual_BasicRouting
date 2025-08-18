@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// 👇 use .single since you're only uploading one file
 const upload = multer({ storage }).single('file');
 
 // Serve static files
@@ -33,14 +34,18 @@ app.get('/', (req, res) => {
 
 // Upload form page
 app.get('/uploadForm', (req, res) => {
-  res.sendFile(path.join(__dirname, 'uploadForm.html'));
+  res.sendFile(path.join(__dirname, 'uploads', 'uploadForm.html'));
 });
 
-// File upload handler
+// File upload handler (uploadForm → /upload)
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
     if (err) return res.end('Error uploading file');
-    res.end('File upload successful');
+
+    const username = req.body.username;
+    console.log('Uploaded by:', username);
+
+    res.end('File uploaded successfully');
   });
 });
 
@@ -64,10 +69,19 @@ app.get('/getStudent', (req, res) => {
   }
 });
 
-app.post('/postAdmin', bodyParser.urlencoded({ extended: false }), (req, res) => {
-  const { adminID, firstName, lastName, department } = req.body;
-  if (adminID && firstName && lastName && department) {
-    res.json({ adminID, firstName, lastName, department });
+// 👇 now this will work because req.file will exist
+app.post('/postAdmin', upload, (req, res) => {
+  const { adminID, firstName, lastName, department, username } = req.body;
+
+  if (adminID && firstName && lastName && department && username && req.file) {
+    console.log('Admin ID:', adminID);
+    console.log('First Name:', firstName);
+    console.log('Last Name:', lastName);
+    console.log('Department:', department);
+    console.log('Username:', username);
+    console.log('Uploaded File:', req.file);
+
+    res.end('Admin data and file uploaded successfully');
   } else {
     res.status(400).send('Missing one or more parameters');
   }

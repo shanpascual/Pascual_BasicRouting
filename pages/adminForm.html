@@ -9,7 +9,8 @@
 <body>
   <div class="container">
     <h1>Admin Form</h1>
-    <form action="/postAdmin" method="POST">
+
+    <form action="/postAdmin" method="POST" enctype="multipart/form-data">
       <label for="adminID">Admin ID</label>
       <input type="text" id="adminID" name="adminID" required />
 
@@ -22,8 +23,28 @@
       <label for="department">Department</label>
       <input type="text" id="department" name="department" required />
 
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="file">Upload File</label>
+      <input type="file" id="file" name="file" class="file-input"/>
+      <label for="file" id="fileLabel" class="file-label">Browse...</label>
+
       <button type="submit">Submit</button>
     </form>
   </div>
+
+  <script>
+    const fileInput  = document.getElementById('file');
+    const fileLabel = document.getElementById('fileLabel');
+
+    fileInput.addEventListener('change', function () {
+      if (fileInput.files.length > 0) {
+        fileLabel.textContent = fileInput.files[0].name;
+      } else {
+        fileLabel.textContent = 'Browse...';
+      }
+    });
+  </script>
 </body>
 </html>
